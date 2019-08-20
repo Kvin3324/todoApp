@@ -18,6 +18,7 @@ class Task extends React.Component {
     this.setState({
       tasks: newState
     })
+    this.inputTask.current.value = '';
   }
 
   handleClick = (e) => {
