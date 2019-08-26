@@ -15,9 +15,41 @@ class Task extends React.Component {
     const newState = [...this.state.tasks];
     newState.push(this.inputTask.current.value);
 
-    this.setState({
-      tasks: newState
-    })
+    console.log(newState);
+
+    newState.forEach(element => {
+      console.log(element);
+      if (newState.includes(element)) {
+        console.log('il est la');
+        this.setState({
+          tasks: newState
+        })
+        alert('là');
+      } else {
+        console.log('pas la');
+      }
+      // if (newState.includes(newState[i])) {
+      //   alert("Ya un bail");
+      // } else {
+      //   this.setState({
+      //     tasks: newState
+      //   })
+      // }
+    });
+
+    // for (let i = 1; i < newState.length; i++) {
+    //   console.log(i);
+    //   console.log(newState[i]);
+    //   if (newState.includes(newState[i])) {
+    //     alert("Ya un bail");
+    //   } else {
+    //     this.setState({
+    //       tasks: newState
+    //     })
+    //   }
+    // }
+
+
     this.inputTask.current.value = '';
   }
 
@@ -31,6 +63,12 @@ class Task extends React.Component {
       tasks: deleteTaskState
     })
   }
+
+  // handleKeyPress = (e) => {
+  //   if (e.key === "13") {
+  //     this.addTask();
+  //   }
+  // }
 
   render() {
     return(
