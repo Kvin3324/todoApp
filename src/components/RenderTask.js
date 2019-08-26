@@ -8,7 +8,7 @@ function RenderTask(props) {
         onClick={props.handleClick}
         name={element}
         />
-      <p> {element} </p>
+      <p class="value-task"> {element} </p>
     </div>
   )
   return (
