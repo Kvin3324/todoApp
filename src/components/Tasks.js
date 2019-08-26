@@ -7,48 +7,22 @@ class Task extends React.Component {
     super(props);
     this.inputTask = React.createRef();
     this.state = {
-      tasks: []
+      tasks: [],
+      taskCompleted: 0
     }
   }
 
   addTask = () => {
     const newState = [...this.state.tasks];
-    newState.push(this.inputTask.current.value);
 
-    console.log(newState);
-
-    newState.forEach(element => {
-      console.log(element);
-      if (newState.includes(element)) {
-        console.log('il est la');
-        this.setState({
-          tasks: newState
-        })
-        alert('là');
-      } else {
-        console.log('pas la');
-      }
-      // if (newState.includes(newState[i])) {
-      //   alert("Ya un bail");
-      // } else {
-      //   this.setState({
-      //     tasks: newState
-      //   })
-      // }
-    });
-
-    // for (let i = 1; i < newState.length; i++) {
-    //   console.log(i);
-    //   console.log(newState[i]);
-    //   if (newState.includes(newState[i])) {
-    //     alert("Ya un bail");
-    //   } else {
-    //     this.setState({
-    //       tasks: newState
-    //     })
-    //   }
-    // }
-
+    if (newState.includes(this.inputTask.current.value)) {
+      alert('Task already added.')
+    } else {
+      newState.push(this.inputTask.current.value);
+      this.setState({
+        tasks: newState
+      })
+    }
 
     this.inputTask.current.value = '';
   }
@@ -59,27 +33,37 @@ class Task extends React.Component {
 
     deleteTaskState.splice(taskId, 1);
 
-    this.setState({
-      tasks: deleteTaskState
+    this.setState((prevState, nextstate) => {
+      return {
+        tasks: deleteTaskState,
+        taskCompleted: prevState.taskCompleted+1
+      }
     })
   }
 
-  // handleKeyPress = (e) => {
-  //   if (e.key === "13") {
-  //     this.addTask();
-  //   }
-  // }
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevState.tasks.length > this.state.tasks.length) {
+      alert('Task is completed.');
+    }
+  }
+
+  handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      this.addTask();
+    }
+  }
 
   render() {
     return(
       <div>
         <div className="start--task">
           <h3>Todo:</h3>
-          <input className="start--task--input" ref={this.inputTask}></input>
+          <input className="start--task--input" ref={this.inputTask} onKeyPress={this.handleKeyPress}></input>
           <div className="start-task--btn-add">
             <button className="btn btn-secondary mt-2" onClick={this.addTask}>Add your task</button>
           </div>
         </div>
+        <small> {this.state.taskCompleted === 0 ? 'No task completed' : `${this.state.taskCompleted} task(s) completed.`} </small>
         <div className="display--tasks" ref="displayTasks">
           <RenderTask tasks={this.state.tasks} handleClick={this.handleClick} />
         </div>
