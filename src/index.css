@@ -41,3 +41,12 @@ body {
       0 20px 1px -9px rgba(0,0,0,0.15);
   padding: 30px;
 }
+
+.input-item {
+  display: flex;
+  margin-top: 28%;
+}
+
+.value-task {
+  margin-left: 18px;
+}
